@@ -7,32 +7,32 @@ resources:
       branch: main
       username: ((auth-github))
       password: x-oauth-basic
-  - name: gcloud-cli
+  - name: gcloud-cli-container
     type: registry-image
     icon: docker
     source:
       repository: gcr.io/google.com/cloudsdktool/google-cloud-cli
-  - name: dcind
+  - name: dcind-container
     type: registry-image
     icon: docker
     source:
       repository: taylorsilva/dcind
-  - name: gcloud-base-container
+  - name: dcind-gcloud-container
     type: registry-image
     icon: docker
     source:
-      repository: technicalenablement/gcloud
+      repository: technicalenablement/dcind-gcloud
       username: timeartist
       password: ((auth-docker))
 jobs: 
   - name: build-gcloud-base-container
     plan:
       - get: generics
-      - get: gcloud-cli
+      - get: gcloud-cli-container
         trigger: true
         params:
           format: oci
-      - get: dcind
+      - get: dcind-container
         trigger: true
         params:
           format: oci
@@ -42,8 +42,8 @@ jobs:
         params:
           CONTEXT: redisfi
           DOCKERFILE: generics/docker/gcloud.dockerfile
-          IMAGE_ARG_BASE: dcind/image.tar
-      - put: gcloud-base-container
+          IMAGE_ARG_BASE: dcind-container/image.tar
+      - put: dcind-gcloud-container
         params:
           image: image/image.tar
           version: 1.0.0

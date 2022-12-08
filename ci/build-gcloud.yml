@@ -8,7 +8,7 @@ run:
   path: build
 inputs:
   - name: generics
-  - name: gcloud-container
-  - name: dcind
+  - name: gcloud-cli-container
+  - name: dcind-container
 outputs:
   - name: image
