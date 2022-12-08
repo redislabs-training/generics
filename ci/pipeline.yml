@@ -1,0 +1,50 @@
+resources:
+  - name: generics
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/redislabs-training/generics
+      branch: main
+      username: ((auth-github))
+      password: x-oauth-basic
+  - name: gcloud-cli
+    type: registry-image
+    icon: docker
+    source:
+      repository: gcr.io/google.com/cloudsdktool/google-cloud-cli
+  - name: dcind
+    type: registry-image
+    icon: docker
+    source:
+      repository: taylorsilva/dcind
+  - name: gcloud-base-container
+    type: registry-image
+    icon: docker
+    source:
+      repository: technicalenablement/gcloud
+      username: timeartist
+      password: ((auth-docker))
+jobs: 
+  - name: build-gcloud-base-container
+    plan:
+      - get: generics
+      - get: gcloud-cli
+        trigger: true
+        params:
+          format: oci
+      - get: dcind
+        trigger: true
+        params:
+          format: oci
+      - task: build
+        privileged: true
+        file: generics/ci/build-gcloud.yml
+        params:
+          CONTEXT: redisfi
+          DOCKERFILE: generics/docker/gcloud.dockerfile
+          IMAGE_ARG_BASE: dcind/image.tar
+      - put: gcloud-base-container
+        params:
+          image: image/image.tar
+          version: 1.0.0
+          bump_aliases: true

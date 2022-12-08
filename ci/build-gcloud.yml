@@ -1,0 +1,14 @@
+---
+platform: linux
+image_resource:
+  type: registry-image
+  source:
+    repository: concourse/oci-build-task
+run:
+  path: build
+inputs:
+  - name: generics
+  - name: gcloud-container
+  - name: dcind
+outputs:
+  - name: image
