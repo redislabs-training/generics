@@ -8,7 +8,7 @@ run:
   path: build
 inputs:
   - name: generics
-  - name: gcloud-cli-container
-  - name: dcind-container
+params:
+  DOCKERFILE: generics/docker/hashicorp-poetry.dockerfile
 outputs:
   - name: image
