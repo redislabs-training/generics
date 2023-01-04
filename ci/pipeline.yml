@@ -7,44 +7,48 @@ resources:
       branch: main
       username: ((auth-github))
       password: x-oauth-basic
-  - name: gcloud-cli-container
+  - name: hashicorp-poetry-container
     type: registry-image
     icon: docker
     source:
-      repository: gcr.io/google.com/cloudsdktool/google-cloud-cli
-  - name: dcind-container
-    type: registry-image
-    icon: docker
-    source:
-      repository: taylorsilva/dcind
-  - name: dcind-gcloud-container
-    type: registry-image
-    icon: docker
-    source:
-      repository: technicalenablement/dcind-gcloud
+      repository: technicalenablement/generic-hashicorp-poetry
       username: timeartist
       password: ((auth-docker))
+  - name: gcloud-poetry-container
+    type: registry-image
+    icon: docker
+    source:
+      repository: technicalenablement/generic-gcloud-poetry
+      username: timeartist
+      password: ((auth-docker))
+  - name: every-monday
+    type: time
+    source:
+      days: [Monday]
 jobs: 
-  - name: build-gcloud-base-container
+  - name: build-hashicorp-poetry-container
     plan:
       - get: generics
-      - get: gcloud-cli-container
+      - get: every-monday
         trigger: true
-        params:
-          format: oci
-      - get: dcind-container
-        trigger: true
-        params:
-          format: oci
       - task: build
         privileged: true
-        file: generics/ci/build-gcloud.yml
-        params:
-          CONTEXT: redisfi
-          DOCKERFILE: generics/docker/gcloud.dockerfile
-          IMAGE_ARG_BASE: dcind-container/image.tar
-      - put: dcind-gcloud-container
+        file: generics/ci/build-hashicorp-poetry.yml
+      - put: hashicorp-poetry-container
         params:
           image: image/image.tar
-          version: 1.0.0
+          version: 0.1.0
+          bump_aliases: true
+  - name: build-gcloud-poetry-container
+    plan:
+      - get: generics
+      - get: every-monday
+        trigger: true
+      - task: build
+        privileged: true
+        file: generics/ci/build-gcloud-poetry.yml
+      - put: gcloud-poetry-container
+        params:
+          image: image/image.tar
+          version: 0.1.0
           bump_aliases: true
