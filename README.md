@@ -1,2 +1,2 @@
 # generics
-Things that are generally useful and not specific to any one thing
+Things that are generally useful to building/deploying Redis demos and not specific to any one thing.
