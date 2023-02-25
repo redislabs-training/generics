@@ -1,0 +1,1 @@
+from generics.communicator.db import set_or_print_commands

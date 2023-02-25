@@ -1,0 +1,3 @@
+#commandsView{background-color: #000;}
+.redis-commands-output{color: #D3D3D3; font-family: monospace; list-style-type: none;}
+.redis-command:hover{color: #DC382C;}
