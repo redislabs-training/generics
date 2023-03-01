@@ -5,7 +5,7 @@ from redis import Redis
 _key_commands    = lambda guid: f'commands:{guid}'
 
 def get_commands(redis: Redis, guid: str, start_at=None) -> tuple:
-    data = redis.xrange(_key_commands(guid), f'({start_at}' if start_at else '-', '+')
+    data = redis.xrange(_key_commands(guid), f'({start_at}' if start_at and start_at != '-' else '-', '+')
     
     if data:
         last_id = data[-1][0]
