@@ -21,6 +21,13 @@ resources:
       repository: technicalenablement/generic-gcloud-poetry
       username: timeartist
       password: ((auth-docker))
+  - name: poetry-container
+    type: registry-image
+    icon: docker
+    source:
+      repository: technicalenablement/generic-poetry
+      username: timeartist
+      password: ((auth-docker))
   - name: every-monday
     type: time
     source:
@@ -48,6 +55,19 @@ jobs:
         privileged: true
         file: generics/ci/build-gcloud-poetry.yml
       - put: gcloud-poetry-container
+        params:
+          image: image/image.tar
+          version: 0.1.0
+          bump_aliases: true
+  - name: build-poetry-container
+    plan:
+      - get: generics
+      - get: every-monday
+        trigger: true
+      - task: build
+        privileged: true
+        file: generics/ci/build-poetry.yml
+      - put: poetry-container
         params:
           image: image/image.tar
           version: 0.1.0

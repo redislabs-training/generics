@@ -13,7 +13,7 @@ def commands(guid: str):
     start_at = request.args.get('start_at')
     redis = current_app.config.get('REDIS')
     if redis is None:
-        redis = Redis.from_url(current_app.config.get('REDIS_URL'))
+        redis = Redis.from_url(current_app.config.get('REDIS_URL'), decode_responses=True)
         current_app.config['REDIS'] = redis
 
     try:
