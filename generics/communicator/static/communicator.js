@@ -7,7 +7,7 @@ function unpackCommandsJSONandUpdateCommandView(data) {
       if (commands[i]['time'] != '0') {time = `(${parseFloat(commands[i]['time']).toFixed(2)} ms)`;} 
       else {time = '';}
 
-      $('.redis-commands-output').append(`<li class="redis-command">> ${commands[i]['command']} ${time}</li>\n<li class="redis-command">&nbsp;</li>`);
+      $('.redis-commands-output').append(`<li class="redis-command">> ${commands[i]['command']} ${time}</li>`);
     }
     return data['last_id'];
   }
