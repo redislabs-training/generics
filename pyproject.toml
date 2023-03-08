@@ -6,6 +6,9 @@ authors = ["Adi Wabisabi <adi.wabisabi@redis.com>"]
 license = "MIT"
 readme = "README.md"
 
+[tool.poetry.scripts]
+cache-tester = "generics.nginx_cache.tester:main"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 redis = ">=3.5.3"
