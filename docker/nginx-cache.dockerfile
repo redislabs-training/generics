@@ -1,9 +1,11 @@
-FROM nginx:alpine
 
-RUN apk update
-RUN apk add python3
+FROM openresty/openresty
 
-RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/usr/local python3 -
+RUN apt update
+RUN apt install -y curl python3 python3-pip python3-venv redis-tools
+
+## the "official" ways of installing poetry don't work well in this context for some reason
+RUN pip3 install poetry 
 
 COPY . /opt/generics
 
