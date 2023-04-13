@@ -8,11 +8,13 @@ readme = "README.md"
 
 [tool.poetry.scripts]
 cache-tester = "generics.nginx_cache.tester:main"
+generic = "generics.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
 redis = ">=3.5.3"
 flask = "^2.2.3"
+cleo = "<1.0.0"
 
 
 [build-system]
