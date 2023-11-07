@@ -12,21 +12,21 @@ resources:
     icon: docker
     source:
       repository: technicalenablement/generic-hashicorp-poetry
-      username: timeartist
+      username: kurtfm
       password: ((auth-docker))
   - name: gcloud-poetry-container
     type: registry-image
     icon: docker
     source:
       repository: technicalenablement/generic-gcloud-poetry
-      username: timeartist
+      username: kurtfm
       password: ((auth-docker))
   - name: poetry-container
     type: registry-image
     icon: docker
     source:
       repository: technicalenablement/generic-poetry
-      username: timeartist
+      username: kurtfm
       password: ((auth-docker))
   - name: every-monday
     type: time
